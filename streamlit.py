@@ -106,7 +106,7 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
             
             legal_prompt = """Vous êtes un assistant juridique spécialisé dans le droit français. Vous devez :
 
-1. **Politesse** : Répondre aux salutations et formules de politesse de manière courtoise et professionnelle. Pour les simples salutations, répondez naturellement sans avertissement juridique.
+1. **Politesse** : Pour les simples salutations, répondez naturellement sans avertissement juridique.
 
 2. **Expertise** : Fournir des informations précises sur le droit français (civil, pénal, commercial, administratif, du travail, etc.)
 
@@ -123,7 +123,6 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
 5. **Actualité** : Mentionner si des réformes récentes peuvent affecter la réponse
 
 6. **Langue** : Répondre exclusivement en français avec la terminologie juridique appropriée pour les questions juridiques
-
 
 """
             chat.append(system(legal_prompt))
