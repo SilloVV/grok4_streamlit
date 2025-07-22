@@ -9,22 +9,13 @@ load_dotenv()
 
 GROK_API_KEY = os.getenv("GROK_API_KEY")
 
-if "messages_admin" not in st.session_state:
-    st.session_state.messages_admin = []
-if "messages_test" not in st.session_state:
-    st.session_state.messages_test = []
-if "authenticated" not in st.session_state:
-    st.session_state.authenticated = False
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 st.title("Assistant Juridique Français - Grok-4")
 
-# Create tabs
-tab1, tab2 = st.tabs(["🔒 Admin", "🧪 Test"])
-
-def render_sidebar():
-    """Render the sidebar with search parameters"""
-    with st.sidebar:
-        st.header("Paramètres de recherche")
+with st.sidebar:
+    st.header("Paramètres de recherche")
     search_mode = st.selectbox(
         "Mode de recherche", 
         ["auto", "on", "off"], 
@@ -146,7 +137,6 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
             chat.append(user(prompt))
             
             message_placeholder = st.empty()
-            reasoning_placeholder = st.empty()
             citations_placeholder = st.empty()
             cost_placeholder = st.empty()
             full_response = ""
@@ -157,31 +147,13 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
             
             message_placeholder.markdown(full_response)
             
-            # Display reasoning if available
-            if hasattr(response, 'reasoning_content') and response.reasoning_content:
-                with reasoning_placeholder.expander("🧠 Raisonnement du modèle"):
-                    st.markdown(response.reasoning_content)
+            # Calculate costs
+            input_words = len(prompt.split())
+            output_words = len(full_response.split())
+            input_tokens = input_words * 3
+            output_tokens = output_words * 3
             
-            # Calculate costs with actual token usage if available
-            if hasattr(response, 'usage') and response.usage:
-                completion_tokens = response.usage.completion_tokens
-                reasoning_tokens = getattr(response.usage, 'reasoning_tokens', 0)
-                # Estimate input tokens (3 per word as fallback)
-                input_tokens = len(prompt.split()) * 3
-                
-                # Token cost calculation
-                token_cost = (input_tokens * 3 / 1_000_000) + (completion_tokens * 15 / 1_000_000)
-                if reasoning_tokens > 0:
-                    token_cost += reasoning_tokens * 15 / 1_000_000  # Reasoning tokens cost same as output
-            else:
-                # Fallback to word estimation
-                input_words = len(prompt.split())
-                output_words = len(full_response.split())
-                input_tokens = input_words * 3
-                completion_tokens = output_words * 3
-                reasoning_tokens = 0
-                
-                token_cost = (input_tokens * 3 / 1_000_000) + (completion_tokens * 15 / 1_000_000)
+            token_cost = (input_tokens * 3 / 1_000_000) + (output_tokens * 15 / 1_000_000)
             
             citations = getattr(response, 'citations', None) if hasattr(response, 'citations') else None
             search_cost = 0
@@ -196,12 +168,8 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
             with cost_placeholder.expander("💰 Coût de cette réponse"):
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    total_tokens = input_tokens + completion_tokens + reasoning_tokens
-                    st.metric("Tokens utilisés", f"{total_tokens:,}")
-                    caption = f"Input: {input_tokens:,} | Output: {completion_tokens:,}"
-                    if reasoning_tokens > 0:
-                        caption += f" | Raisonnement: {reasoning_tokens:,}"
-                    st.caption(caption)
+                    st.metric("Tokens utilisés", f"{input_tokens + output_tokens:,}")
+                    st.caption(f"Input: {input_tokens:,} | Output: {output_tokens:,}")
                 with col2:
                     st.metric("Sources consultées", num_sources)
                     st.caption(f"Recherche: ${search_cost:.3f}")
