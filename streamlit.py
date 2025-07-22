@@ -39,7 +39,7 @@ with st.sidebar:
         - Limitation du nombre de sources (max 6)
         """)
     
-    st.header("⚠️ Limitations Grok-4")
+    st.header("❌ Points Faibles Grok-4")
     with st.expander("Informations importantes"):
         st.markdown("""
         **Contexte**: 260k tokens maximum
