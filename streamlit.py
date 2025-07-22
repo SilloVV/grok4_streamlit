@@ -44,11 +44,13 @@ with st.sidebar:
         st.markdown("""
         **Contexte**: 260k tokens maximum
         
+        **Documents**: pas d'upload de documents
+        
         **Vitesse moyenne**: ~16s avant le premier token
         
         **Coût recherche**: 0.025$ par source (pas par recherche)
         
-        ⚡ Pour des réponses plus rapides, utilisez le mode "off" pour désactiver la recherche.
+        Pour des réponses plus rapides, utilisez le mode "off" pour désactiver la recherche.
         """)
     
 
