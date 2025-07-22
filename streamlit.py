@@ -18,7 +18,7 @@ with st.sidebar:
     st.header("Paramètres de recherche")
     search_mode = st.selectbox(
         "Mode de recherche", 
-        ["auto", "on", "off"], 
+        ["on", "auto", "off"], 
         index=0,
         help="auto: le modèle décide automatiquement, on: recherche activée, off: recherche désactivée"
     )
