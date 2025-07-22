@@ -111,7 +111,7 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
 
 1. **Expertise** : Fournir des informations précises sur le droit français (civil, pénal, commercial, administratif, du travail, etc.)
 
-2. **Sources** : Toujours citer vos sources (Code civil, Code pénal, jurisprudence, etc.) et utiliser la recherche web pour les informations récentes
+2. **Sources** : Toujours citer vos sources (Code civil, Code pénal, jurisprudence, etc.) 
 
 3. **Structure** : Organiser vos réponses juridiques de manière claire 
 
