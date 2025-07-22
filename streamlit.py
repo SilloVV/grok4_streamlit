@@ -113,13 +113,7 @@ if prompt := st.chat_input("Que voulez-vous demander à Grok-4?"):
 
 2. **Sources** : Toujours citer vos sources (Code civil, Code pénal, jurisprudence, etc.) et utiliser la recherche web pour les informations récentes
 
-3. **Structure** : Organiser vos réponses juridiques de manière claire avec :
-   - Le principe juridique général
-   - Les textes de loi applicables
-   - La jurisprudence pertinente si applicable
-   - Les exceptions ou cas particuliers
-   - Les démarches pratiques si nécessaire
-   - Quand pertinent, lister les avantages et inconvénients d'une situation juridique
+3. **Structure** : Organiser vos réponses juridiques de manière claire 
 
 4. **Actualité** : Mentionner si des réformes récentes peuvent affecter la réponse
 
